@@ -31,15 +31,15 @@ app.listen(port, ()=> {console.log(`server running on port: ${port}`);});
 
 //function to return all data in project endpoint
 
-app.get('/all', (req,res)=>{res.send(projectData).status{200}.end()});
+app.get('/all', (req,res)=>{res.send(projectData).status(200).end()});
 
 //the POST request
 
 app.post('/postData', (req,res)=>{
-  projectData{
+  projectData = {
     temp: request.body.temp,
     date: request.body.date,
     content: request.body.content
   };
-  res.send(projectData).status{200}.end();
+  res.send(projectData).status(200).end();
 });
