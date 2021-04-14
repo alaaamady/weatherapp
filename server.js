@@ -27,11 +27,15 @@ app.use(express.static('website'));
 
 // server listener
 
-app.listen(port, ()=> {console.log(`server running on port: ${port}`);});
+app.listen(port, ()=> {
+ console.log(`server running on port: ${port}`);
+});
 
 //function to return all data in project endpoint
 
-app.get('/all', (req,res)=>{res.send(projectData).status(200).end()});
+app.get('/all', (req,res)=>{
+ res.send(projectData).status(200).end();
+});
 
 //the POST request
 
