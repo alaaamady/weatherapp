@@ -34,7 +34,7 @@ function fGenerate(){
 // getZipCode function:
 
 async function getZipCode(zipCode){
-  return await(await fetch(`http://api.openweathermap.org/data/2.5/forecast?zip=${zipCode}${apiKey}`).json());
+  return await fetch(`http://api.openweathermap.org/data/2.5/forecast?zip=${zipCode}${apiKey}`).json();
 }
 
 //posting data to server
