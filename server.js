@@ -1,49 +1,38 @@
 // Setup empty JS object to act as endpoint for all routes
 projectData = {};
 
-// including packages
- const cors = require('cors');
- const express = require('express');
- const bodyParer = require('body-parser');
+//require dependencies 
+const express = require('express');
+const bodyParser = require('body-parser');
+const cors = require('cors');
 
- // setting the port
-
- const port = 8000;
-
-// Start up an instance of app
-
+//starting an instance of express
 const app = express();
+
+
+// Initialize the main project folder
+app.use(express.static('website'));
+
+
+//configuring express to use cors 
+app.use(cors());
+
+//declaring a port 
+const port = 8000;
+
+//setting up server and making it listen to port
+app.listen(port, ()=>{console.log(`server is running and listening to port: ${port}`);});
 
 /* Middleware*/
 //Here we are configuring express to use body-parser as middle-ware.
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-// Cors for cross origin allowance
- app.use(cors());
-
-// Initialize the main project folder
-app.use(express.static('website'));
-
-// server listener
-
-app.listen(port, ()=> {
- console.log(`server running on port: ${port}`);
+app.post('/add', (req,res)=>{
+    projectData.temp = req.body.temp;
+    projectData.date = req.body.date;
 });
 
-//function to return all data in project endpoint
-
-app.get('/all', (req,res)=>{
- res.send(projectData).status(200).end();
-});
-
-//the POST request
-
-app.post('/postData', (req,res)=>{
-  projectData = {
-    temp: request.body.temp,
-    date: request.body.date,
-    content: request.body.content
-  };
-  res.send(projectData).status(200).end();
+app.get('/all',(req,res)=>{
+  res.send(projectData);
 });
