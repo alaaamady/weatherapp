@@ -1,4 +1,5 @@
 body{
+
     background: #fffff8;
     font-family: -apple-system, BlinkMacSystemFont, sans-serif;
 }
@@ -59,11 +60,11 @@ input{
     display:block;
     height: 60px;
     width: 320px;
-    background:#f8a488;
+    background:#ffe8d6;
     color: #5aa897;
     font-size: 20px;
     font-family: 'Oswald', sans-serif;
-    border: none;
+    border: #ffc0d0;
 }
 
 button{
@@ -82,10 +83,11 @@ h1{
 }
 
 textarea{
-    background:#f8a488;
+    background:#ffead6;
     color: #5aa897;
     font-size: 20px;
     font-family: 'Oswald', sans-serif;
+    border: #ffc0d0;
 }
 /* Reset style for HTML element on active to have no border*/
 input:focus,
