@@ -1,80 +1,72 @@
-/* Global Variables */
-
-const apiKey = "&appid=6393ae4578659d24d9100ea1ebd36800=imperial";
-const apiURL = "http://localhost:8000/";
-
-const zip = document.getElementById('zip');
-const feelings = document.getElementById('feelings');
+var zipCode =  document.getElementById('zip');
+const apiKey = "1c5efd2c14f3610051c69dcabcee230c";
+var apiURL= "https://api.openweathermap.org/data/2.5/weather?zip=";
+const btn = document.getElementById('generate');
 const temp = document.getElementById('temp');
 const date = document.getElementById('date');
 const content = document.getElementById('content');
 
-//event listener for when user clicks generate button
-document.getElementById('generate').addEventListener('click', fGenerate);
 
-// generate button function:
-function fGenerate(){
-  let data = {
-    zipcode: zip.value,
-    content: content.value,
-    date: new Date()
-  };
-
-// 1- we send zip code to API to get the info related to it
-  getZipCode(data.zipcode).then(zipinfo=> {
-    if (zipinfo.cod !=200)
-     return alert(zipinfo.message);
-// get temprature
-    data.temp = zipinfo.list[0].main.temp;
-    postDatatoServer(data);
-  }).catch(catchError());
-
-
-}
-// getZipCode function:
-
-async function getZipCode(zipCode){
-  return await fetch(`http://api.openweathermap.org/data/2.5/forecast?zip=${zipCode}${apiKey}`).json();
-}
-
-//posting data to server
-async function postData(data){
-  let response = await fetch (`${apiURL}postData`, {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify(data)
-  });
-  try {
-    if(!response.ok){
-      alert('failure!')
-      return;
+//get data function
+ const getData = async () => {
+     const request =await fetch(apiURL+zipCode.value+"&appid="+apiKey);
+     try{
+      const data = await request.json();
+      return data;
+    }catch(error){
+      console.log("error" , error);
     }
-    response.json().then(data => {
-      if(response.ok)
-       updateUserInterface();
-      else
-       alert('failure!');
-    }).catch(catchError());
-  } catch(error){
-    catchError(error);
-  }
-}
+ };
+ 
 
-//changing UI function
+ const postData = async (url = "", data= {}) => {
+   var fullAPIURL = apiURL+zipCode.value+"&appid="+apiKey+'/add';
+   await fetch('/add', {
+    method: 'POST', 
+    credentials: 'same-origin',
+    headers: {'Content-Type': 'application/json',},
+    body: JSON.stringify(data)});
+    try{
+      return;
+    }catch(error){
+     console.log("error", error );
+   }
+ };
 
-async function updateUserInterface(){
-  let response = await fetch(`${apiURL}all`);
-  try {
-    response.json().then(data => {
-      date.innerHTML = `Data is: ${data.date}`;
+ const updateContent = async () => {
+   const request = await fetch('/all');
+   var feelings = document.getElementById('feelings').value;
+
+   try{
+    await request.json().then(function (data) {
+      date.innerHTML = `Date is: ${data.date}`;
       temp.innerHTML = `Temprature is: ${data.temp}`;
-      content.innerHTML = `Current Feeling is: ${data.content}`;
-    }).catch(catchError());
-  } catch (error) {
-    catchError(error);
+      content.innerHTML = `Current Feeling is: ${feelings}`;});
+   }catch(error){
+    console.log("error", error );
   }
-}
+};
+ 
 
-//error display
 
-const catchError = (error)=>console.log('There is an error', error);
+
+
+
+// adding functionality to generate button
+
+btn.addEventListener('click', handleClick);
+
+function handleClick(){
+    if(!zipCode.value){
+        alert('Pleas eneter Zip code');
+    }else{
+      getData().then(function(data){
+        postData('/all', {
+          date: new Date,
+          temp: data.main.temp,
+        });
+        updateContent();
+      });
+    }
+  }
+
