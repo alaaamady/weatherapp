@@ -9,7 +9,7 @@ const content = document.getElementById('content');
 
 //get data function
  const getData = async () => {
-     const request =await fetch(apiURL+zipCode.value+"&appid="+apiKey);
+     const request =await fetch(apiURL+zipCode.value+"&appid="+apiKey+"&units=imperial");
      try{
       const data = await request.json();
       return data;
@@ -20,7 +20,7 @@ const content = document.getElementById('content');
  
 
  const postData = async (url = "", data= {}) => {
-   var fullAPIURL = apiURL+zipCode.value+"&appid="+apiKey+'/add';
+   var fullAPIURL =apiURL+zipCode.value+"&appid="+apiKey+"&units=imperial"+'/add';
    await fetch('/add', {
     method: 'POST', 
     credentials: 'same-origin',
