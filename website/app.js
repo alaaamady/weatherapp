@@ -20,7 +20,6 @@ const content = document.getElementById('content');
  
 
  const postData = async (url = "", data= {}) => {
-   var fullAPIURL =apiURL+zipCode.value+"&appid="+apiKey+'/add';
    await fetch('/add', {
     method: 'POST', 
     credentials: 'same-origin',
@@ -69,4 +68,3 @@ function handleClick(){
       });
     }
   }
-
