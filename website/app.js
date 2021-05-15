@@ -1,5 +1,5 @@
 var zipCode =  document.getElementById('zip');
-const apiKey = "1c5efd2c14f3610051c69dcabcee230c";
+const apiKey = "1c5efd2c14f3610051c69dcabcee230c&units=imperial";
 var apiURL= "https://api.openweathermap.org/data/2.5/weather?zip=";
 const btn = document.getElementById('generate');
 const temp = document.getElementById('temp');
@@ -9,7 +9,7 @@ const content = document.getElementById('content');
 
 //get data function
  const getData = async () => {
-     const request =await fetch(apiURL+zipCode.value+"&appid="+apiKey+"&units=imperial");
+     const request =await fetch(apiURL+zipCode.value+"&appid="+apiKey);
      try{
       const data = await request.json();
       return data;
@@ -20,7 +20,7 @@ const content = document.getElementById('content');
  
 
  const postData = async (url = "", data= {}) => {
-   var fullAPIURL =apiURL+zipCode.value+"&appid="+apiKey+"&units=imperial"+'/add';
+   var fullAPIURL =apiURL+zipCode.value+"&appid="+apiKey+'/add';
    await fetch('/add', {
     method: 'POST', 
     credentials: 'same-origin',
